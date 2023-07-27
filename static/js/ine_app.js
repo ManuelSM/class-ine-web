@@ -97,6 +97,7 @@
             if (labelObject.credential === "none") {
 
                 showAlertDisableConfirm(false);
+                setObjectNoCredential();
 
             } else if (nullOnObject) {
 
@@ -107,6 +108,8 @@
                 showAlertDisableConfirm(false);
 
             }
+
+            console.log(labelObject);
 
         });
 
