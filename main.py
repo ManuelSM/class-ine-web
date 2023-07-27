@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, jsonify
+from flask import Flask, request, render_template, jsonify
 from voc_writer import Writer
 import os, shutil
 from random import shuffle
@@ -25,6 +25,37 @@ PATH_MODEL_QUALITY     = './static/assets/dataset/model_quality'
 
 PATH_MODEL_TEMP = './static/assets/dataset/temp_files'
 
+
+# Create directories if not exist
+if not os.path.exists(PATH_MODEL_CREDENTIAL):
+    os.makedirs(PATH_MODEL_CREDENTIAL + '/' + 'anverso')
+    os.makedirs(PATH_MODEL_CREDENTIAL + '/' + 'reverso')
+    os.makedirs(PATH_MODEL_CREDENTIAL + '/' + 'no')
+
+if not os.path.exists(PATH_MODEL_ORIENTATION):
+    os.makedirs(PATH_MODEL_ORIENTATION + '/' + '0')
+    os.makedirs(PATH_MODEL_ORIENTATION + '/' + '1')
+    os.makedirs(PATH_MODEL_ORIENTATION + '/' + '2')
+    os.makedirs(PATH_MODEL_ORIENTATION + '/' + '3')
+
+if not os.path.exists(PATH_MODEL_QUALITY):
+    os.makedirs(PATH_MODEL_QUALITY + '/' + 'buena')
+    os.makedirs(PATH_MODEL_QUALITY + '/' + 'mala')
+
+if not os.path.exists(PATH_MODEL_VERSION):
+    os.makedirs(PATH_MODEL_VERSION + '/' + 'DEF' + '/' + 'anverso')
+    os.makedirs(PATH_MODEL_VERSION + '/' + 'DEF' + '/' + 'reverso')
+
+    os.makedirs(PATH_MODEL_VERSION + '/' + 'GH' + '/' + 'anverso')
+    os.makedirs(PATH_MODEL_VERSION + '/' + 'GH' + '/' + 'reverso')
+
+    os.makedirs(PATH_MODEL_VERSION + '/' + 'null')
+
+if not os.path.exists(PATH_MODEL_TEMP):
+    os.makedirs(PATH_MODEL_TEMP)
+
+if not os.path.exists(PATH_PROCCESSED):
+    os.makedirs(PATH_PROCCESSED)
 
 @app.route("/obtener_datos", methods=['GET'])
 def get_data_ine():
@@ -78,7 +109,7 @@ def process_image():
 
         is_credential = True
 
-        print('Desde POST process')
+        # print('Desde POST process')
 
         img_data = request.get_json()
 
@@ -144,8 +175,6 @@ def process_image():
         orientation = img_data['orientation']
 
         if is_credential:
-
-            print("true en is credencial")
 
             if orientation == '0':
                 
