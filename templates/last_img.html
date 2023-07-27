@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasificador imágenes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="mt-4 text-center">
+        <h1>Última imagen clasificada</h1>
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-around mt-4">
+
+            <div class="grid">
+                <div class="boton-no">
+                    <a class="btn btn-large btn-outline-danger width100 option" href="{{ url_for('index') }}">No</a>
+                </div>
+                
+                <div class="imagen-grid">
+                    <img class="imagen" src="{{ url_for('static', filename=name) }}" alt="">
+                </div>
+    
+                <div class="boton-si">
+                    <a class="btn btn-large btn-outline-success width100 option" href="{{ url_for('index') }}">Si</a>
+                </div>
+    
+            </div>
+
+        </div>
+    </div>
+
+    <div class="text-center">
+        <h2>Etiquetada como {{type}}</h2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/return.js') }}"></script>
+
+</body>
+
+
+</html>

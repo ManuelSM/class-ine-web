@@ -1,0 +1,33 @@
+<annotation>
+
+    <folder>{{ folder }}</folder>
+    <filename>{{ filename }}</filename>
+    <path>{{ path }}</path>
+
+    <source>
+        <database>{{ database }}</database>
+    </source>
+
+    <size>
+        <width>{{ width }}</width>
+        <height>{{ height }}</height>
+    </size>
+
+{% for object in objects %}
+    <object>
+
+        <credential>{{ object.credential }}</credential>
+        <orientation>{{ object.orientation }}</orientation>
+        <version>{{ object.version }}</version>
+        <quality>{{ object.quality }}</quality>
+
+        <bndbox>
+            <left>{{ object.left }}</left>
+            <top>{{ object.top }}</top>
+            <right>{{ object.right }}</right>
+            <bottom>{{ object.bottom }}</bottom>
+        </bndbox>
+
+    </object>
+{% endfor %}
+</annotation>

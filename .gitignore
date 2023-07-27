@@ -1,0 +1,15 @@
+# Ignorar directorio de assets 
+/static/assets
+
+# Ignorar directorio de python cache 
+/__pycache__
+/ine_detector_utilities/__pycache__
+
+# Ignorar directorio de entorno
+/.venv
+
+# Ignorar bootstrap min de CSS 
+/static/css/bootstrap.min.css
+
+# Ignorar archivo de modelo
+*.tflite
