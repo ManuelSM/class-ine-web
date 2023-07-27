@@ -33,6 +33,7 @@
         bottom: '',
     }
 
+
     console.log("Hola HuBOX :)");
 
 
@@ -47,7 +48,7 @@
             if (hasCred) {
 
                 setOrientation(data);
-                setQuality(data)
+                setQuality(data);
             
                 // Valores originales de Rect de la imagen original
                 const originalCoord = data.bounding_box;
@@ -58,8 +59,7 @@
                 const options = {};
                 stage.newWidget(rect, options);
 
-
-                paintValues(arrayCoord);
+                // paintValues(arrayCoord);
                 // Agregar los valores de rect al objeto 
                 setCoordObject(arrayCoord);
             }
@@ -69,15 +69,14 @@
         });
 
         
-        const stage  = Jcrop.attach('image-target');
+        const stage = Jcrop.attach('image-target');
         
         stage.listen('crop.change', function (widget, e) {
 
            const pos = widget.pos;
-           const arrayCoor = [pos.x, pos.y, pos.w, pos.h];
            const arrayObject = [pos.y, pos.x, pos.x + pos.w, pos.y + pos.h];
 
-           paintValues(arrayCoor);
+           // paintValues(arrayCoor);
            setCoordObject(arrayObject);
            
         });
@@ -92,7 +91,7 @@
         btnSaveData.addEventListener('click', () => {
             
             // Checar si labelObject esta completo 
-            const nullOnObject = checkNullObject(labelObject)
+            const nullOnObject = checkNullObject(labelObject);
 
             if (labelObject.credential === "none") {
 
@@ -109,18 +108,18 @@
 
             }
 
-            console.log(labelObject);
+            // console.log(labelObject);
 
         });
 
 
         btnSaveConfirm.addEventListener('click', () => {
-            saveData()
+            saveData();
         });
 
 
         buttonNoCredential.addEventListener('click', () => {
-            deactivateOptions()
+            deactivateOptions();
         });
 
 
@@ -128,17 +127,17 @@
 
 
     function setQuality(data){
-        const ids = data.data.ids[0]
-        const quality = ids?.quality
+        const ids = data.data.ids[0];
+        const quality = ids?.quality;
         
         if (quality < 10) {
             labelGroupArrayQua[1].classList.add('active');
-            labelObject.quality = 'Mala'
+            labelObject.quality = 'Mala';
             return
         }
 
         labelGroupArrayQua[0].classList.add('active');
-        labelObject.quality = 'Buena'
+        labelObject.quality = 'Buena';
 
         return
 
@@ -148,8 +147,8 @@
     function setLabelCredential(data){
  
         let hasCred;
-        const ids = data.data.ids[0]
-        const label = ids?.label
+        const ids = data.data.ids[0];
+        const label = ids?.label;
  
         if (label == "back_id") {
 
@@ -164,10 +163,12 @@
             labelObject.credential = "anverso";
 
             hasCred = true;
+
         } else if(label === undefined) {
             
             buttonNoCredential.classList.add('active');
             labelObject.credential = "none";
+
             deactivateOptions();
 
             hasCred = false;
@@ -180,11 +181,12 @@
 
     function setOrientation(data) {
 
-        const ids = data.data.ids[0]
+        const ids = data.data.ids[0];
 
-        const orientation = ids.orientation
+        const orientation = ids.orientation;
 
         switch (orientation) {
+
             case 0:
                 labelGroupArrayOri[0].classList.add('active');
                 labelObject.orientation = '0';
@@ -204,66 +206,69 @@
             default:
                 console.log("Default");
                 break;
+
         }
 
-        return ids.orientation
+        return ids.orientation;
 
     }
+
 
     function setCoordObject(array) {
 
         // TODO: Ver si es el valor original o el renderizado
 
         // left value times width
-        labelObject.left = array[0] / scaleX
+        labelObject.left = array[0] / scaleX;
 
         // top value times scale height
-        labelObject.top = array[1] / scaleY
+        labelObject.top = array[1] / scaleY;
 
         // right value times scale width 
-        labelObject.right = array[2] / scaleX
+        labelObject.right = array[2] / scaleX;
 
         // bottom value times scale height
-        labelObject.bottom = array[3] / scaleY
+        labelObject.bottom = array[3] / scaleY;
     }
 
 
-    function paintValues(array) {
+    // function paintValues(array) {
 
-        const valuesDiv = document.getElementById('valores_imagen');
-        const pValues = valuesDiv.lastChild;
+    //     const valuesDiv = document.getElementById('valores_imagen');
+    //     const pValues = valuesDiv.lastChild;
 
-        pValues.textContent = array
+    //     pValues.textContent = array
         
-    }
+    // }
 
 
     function getJcropCoords(arrayINE) {
 
         // Obtener medidas de imagen originales
-        const originalWidth = imageINE.naturalWidth
-        const originalHeight = imageINE.naturalHeight
+        const originalWidth = imageINE.naturalWidth;
+        const originalHeight = imageINE.naturalHeight;
 
         // Obtener medidas de imagen renderizada
-        const renderWidth = imageINE.width
-        const renderHeight = imageINE.height
+        const renderWidth = imageINE.width;
+        const renderHeight = imageINE.height;
 
-        scaleX = renderWidth / originalWidth
-        scaleY = renderHeight / originalHeight
+        // Escalas de imagen 
+        scaleX = renderWidth / originalWidth;
+        scaleY = renderHeight / originalHeight;
 
         if (arrayINE.length == 4) {
 
-            const [left, top, right, bottom] = arrayINE
+            const [left, top, right, bottom] = arrayINE;
 
-            const leftNew = left * scaleX
-            const topNew = top * scaleY
-            const rightNew = right * scaleX
-            const bottomNew = bottom * scaleY
+            const leftNew = left * scaleX;
+            const topNew = top * scaleY;
+            const rightNew = right * scaleX;
+            const bottomNew = bottom * scaleY;
 
-            const widthNew = rightNew - leftNew
-            const heightNew = bottomNew - topNew
+            const widthNew = rightNew - leftNew;
+            const heightNew = bottomNew - topNew;
 
-            const arrayCoord = [Math.floor(leftNew), Math.floor(topNew), Math.floor(widthNew), Math.floor(heightNew)]
+            const arrayCoord = [Math.floor(leftNew), Math.floor(topNew), Math.floor(widthNew), Math.floor(heightNew)];
 
 
             // console.log(`renderWidth => ${renderWidth} :: renderHeight => ${renderHeight}`);
@@ -346,15 +351,11 @@
 
 
     function saveData() {
-        const imageWidth = imageINE.naturalWidth
-        const imageHeight = imageINE.naturalHeight
 
-        labelObject.height = imageHeight
-        labelObject.width = imageWidth
+        labelObject.width = imageINE.naturalWidth;
+        labelObject.height = imageINE.naturalHeight;
 
         let jsData = JSON.stringify(labelObject);
-
-       
 
         fetch('/process',
         {
@@ -390,11 +391,11 @@
                 labelGroupArray.forEach(btn => btn.classList.remove('active'));
                 element.classList.add('active');
 
-                getLabel(element)
+                getLabel(element);
 
-                console.log(labelObject);
+                // console.log(labelObject);
 
-                deactivateOptions()
+                deactivateOptions();
 
             });
 
@@ -405,41 +406,46 @@
 
 
     function getLabelClass(element){
-        const labelId = element.id 
-        const labelClass = labelId.split('-').pop()
+
+        const labelId = element.id;
+        const labelClass = labelId.split('-').pop();
+
         return labelClass
+
     }
 
 
     function getLabel(selectedLabel) {
 
         const label = selectedLabel.querySelector('h6').textContent;
-        const labelParent = selectedLabel.parentElement
-        const labelClass = getLabelClass(labelParent)
+        const labelParent = selectedLabel.parentElement;
+        const labelClass = getLabelClass(labelParent);
 
         if(labelClass == "credential")  {
-            let text = label.split(' ').pop()
+
+            let text = label.split(' ').pop();
 
             if (text == 'credencial') {
-                text = "none"
+                text = "none";
             }
 
-            labelObject.credential = text
+            labelObject.credential = text;
 
         } else if (labelClass == "orientation") {
 
-            const text = label.split('.')[0]
+            const text = label.split('.')[0];
             
-            labelObject.orientation = text
+            labelObject.orientation = text;
 
         } else if (labelClass == "version"){
-            const text = label.split(' ')[1]
 
-            labelObject.version = text
+            const text = label.split(' ')[1];
+
+            labelObject.version = text;
 
         } else {
             
-            labelObject.quality = label
+            labelObject.quality = label;
 
         }
 
@@ -459,7 +465,7 @@
         .then(response => response.json())
         .then(data => {
 
-            console.log(data.datos);
+            // console.log(data.datos);
 
             // return data.datos.bounding_box;
 
@@ -467,7 +473,6 @@
 
         })
         .catch(error => console.error('Error:', error));
-
 
     }
 
